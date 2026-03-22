@@ -1,0 +1,5 @@
+node_modules/
+.env
+projeto-digital-store-documentacao/
+.DS_Store
+*.log
