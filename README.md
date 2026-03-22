@@ -82,17 +82,17 @@ O servidor começará a escutar requisições do seu Front-end na porta `http://
 
 Abaixo as respostas mapeando a eficiência e o design dos Models, retornando com fluidez as requisições:
 
-### Visualização de Requisições - Rotas Search Dinâmicas
+### Visualização de Token gerado com JWT
 <p align="center">
   <img src="images/image (1).png" width="100%" />
 </p>
 
-### Sucesso de Criação Múltipla - 201 Created
+### Proteção de Middleware JWT - 401 Unauthorized
 <p align="center">
   <img src="images/image (2).png" width="100%" />
 </p>
 
-### Proteção de Middleware JWT - 401 Unauthorized
+### Retorno de erro informando categoria não autorizada (Token validado)
 <p align="center">
   <img src="images/image (3).png" width="100%" />
 </p>
