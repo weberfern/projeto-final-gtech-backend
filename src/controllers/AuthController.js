@@ -15,8 +15,9 @@ const AuthController = {
                 return res.status(400).json({ message: "Credenciais inválidas" });
             }
 
-            // Se email tiver no banco de dados verifica se a senha confere
-            if (password !== user.password) {
+            // Se email tiver no banco de dados verifica a senha criptograda com bcrypt (analisa o hash)
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
                 return res.status(400).json({ message: "Credenciais inválidas" });
             }
 

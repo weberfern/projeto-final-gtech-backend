@@ -1,18 +1,28 @@
 const e = require('express');
 const { User } = require('../models'); // Importa a tabela de usuários
+const bcrypt = require('bcrypt');
 
 const UserController = {
     // Função para criar um novo usuário (POST)
     async create(req, res) {
         try {
             // Recebe os dados do corpo da requisição
-            const { firstname, surname, email, password } = req.body;
+            const { firstname, surname, email, password, confirmPassword } = req.body;
+
+            // Checando se a senha bate (confirmPassword)
+            if (password !== confirmPassword) {
+                return res.status(400).json({ message: "As senhas não coincidem." });
+            }
+
+            // Criptografando a senha com bcrypt
+            const passwordHash = await bcrypt.hash(password, 10);
+
             // Cria o novo usuário no banco de dados com Sequelize (INSERT INTO)
             const newUser = await User.create({
                 firstname,
                 surname,
                 email,
-                password
+                password: passwordHash
             });
             // Retorna o usuário criado com status 201 (Created)
             return res.status(201).json(newUser);
