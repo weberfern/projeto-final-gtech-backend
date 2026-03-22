@@ -82,10 +82,19 @@ O servidor começará a escutar requisições do seu Front-end na porta `http://
 
 Abaixo as respostas mapeando a eficiência e o design dos Models, retornando com fluidez as requisições:
 
+### Visualização de Requisições - Rotas Search Dinâmicas
 <p align="center">
-  <img src="images/image (1).png" width="31%" title="Visualização de Requisições - Rotas Search" />
-  <img src="images/image (2).png" width="31%" title="Sucesso de Criação Múltipla - 201 Created" />
-  <img src="images/image (3).png" width="31%" title="Proteção de Middleware JWT - 401 Unauthorized" />
+  <img src="images/image (1).png" width="100%" />
 </p>
 
-<p align="center">Desenvolvido com 💼 por WeberFern durante a Formação Digital College.</p>
+### Sucesso de Criação Múltipla - 201 Created
+<p align="center">
+  <img src="images/image (2).png" width="100%" />
+</p>
+
+### Proteção de Middleware JWT - 401 Unauthorized
+<p align="center">
+  <img src="images/image (3).png" width="100%" />
+</p>
+
+<p align="center">Desenvolvido por Weber Fernandes durante a Formação Digital College.</p>
