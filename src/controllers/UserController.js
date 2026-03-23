@@ -39,7 +39,9 @@ const UserController = {
             const { id } = req.params;
 
             // Busca o usuário no banco de dados com Sequelize (SELECT * FROM users WHERE id = ?)
-            const user = await User.findByPk(id);
+            const user = await User.findByPk(id, {
+                attributes: { exclude: ['password'] }
+            });
 
             // Se o sequelize não retornar nada
             if (!user) {
