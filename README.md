@@ -15,13 +15,13 @@ Esta API RESTful foi desenhada sob a arquitetura **MVC** para fornecer o motor c
 O projeto foi particionado focando a alta responsabilidade única de cada camada:
 ```text
 ├── src/
-│   ├── config/       # Chaves e ponteiros de acesso ao Banco de Dados (database.js)
-│   ├── controllers/  # Cérebro da aplicação (Regras de negócio, cálculos, Models)
-│   ├── middleware/   # Catraca de Segurança (Validação de JWT Header)
+│   ├── config/       # Chaves e configurações de acesso ao Banco de Dados (database.js)
+│   ├── controllers/  # Controladores da aplicação (Regras de negócio, cálculos, Models)
+│   ├── middleware/   # Componentes de segurança (Validação de JWT Header)
 │   ├── migrations/   # Histórico arquitetural (Geração das Tabelas via CLI)
 │   ├── models/       # Definição das Entidades (User, Category, Product)
 │   ├── routes/       # Portas de Entrada da API mapeadas por verbos HTTP
-│   └── server.js     # Inicializador mestre do Servidor Express
+│   └── server.js     # Inicializador do Servidor Express
 ├── .env              # (Oculto) Senhas Locais
 └── .sequelizerc      # Mapa de direcionamento auxiliar
 ```
@@ -61,7 +61,7 @@ npm install
 ```env
 DB_HOST=127.0.0.1
 DB_USER=root
-DB_PASSWORD=sua_senha
+DB_PASSWORD=sua_senha (A mesma configurada no seu MYSQL local)
 DB_NAME=drip_store_db
 JWT_SECRET=SuaChaveSuperSecreta
 ```
@@ -70,7 +70,7 @@ JWT_SECRET=SuaChaveSuperSecreta
 npx sequelize-cli db:migrate
 ```
 
-4. Ligue a Chave de Ignição:
+4. Inicie o servidor:
 ```bash
 npm start
 ```
