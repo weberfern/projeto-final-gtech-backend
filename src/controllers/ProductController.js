@@ -46,7 +46,8 @@ const ProductController = {
                         shape: option.shape,
                         radius: option.radius,
                         type: option.type,
-                        values: option.values.join(',')
+                        // Aceita tanto 'value' quanto 'values' para evitar crashes
+                        values: (option.values || option.value).join(',')
                     });
                 }
             }
@@ -90,38 +91,34 @@ const ProductController = {
                 };
             }
 
-            // Filtro de categoria (?category_ids=1,15)
-            if (category_ids) {
-                // Transforma '1,15' em um array [1, 15] de números Int
-                const idsArray = category_ids.split(',').map(id => parseInt(id));
+            // Instancia as dependências do produto (sempre serão puxadas junto com ele)
+            let includeCategory = { model: Category, as: 'categories', through: { attributes: [] } };
+            let includeOption = { model: ProductOption, as: 'options' };
+            let includeImage = { model: ProductImage, as: 'images' };
 
-                includeRules.push({
-                    model: Category,
-                    as: 'categories',
-                    where: { id: { [Op.in]: idsArray } }, // Pega apenas se estiver In (dentro) do Array
-                    through: { attributes: [] }
-                })
+            // Se filtrou por categoria, injeta a regra WHERE dentro do Include de categorias
+            if (category_ids) {
+                const idsArray = category_ids.split(',').map(id => parseInt(id));
+                includeCategory.where = { id: { [Op.in]: idsArray } };
             }
 
-            // Filtro de Opções do Produto (?option[45]=GG,PP)
+            // Se filtrou por Opção, injeta a regra WHERE dentro do Include de Opções
             if (req.query.option) {
-                // O loop for...of extrai o ID "45" e a string "GG,PP" 
+                let orConditions = [];
                 for (const [optionId, optionValues] of Object.entries(req.query.option)) {
-
-                    const valuesArray = optionValues.split(','); // Transforma "GG,PP" em ['GG', 'PP']
-                    includeRules.push({
-                        model: ProductOption,
-                        as: 'options',
-                        where: {
-                            id: parseInt(optionId),
-                            // Cria regras LIKE na tabela Vizinhas buscando a palavra 'GG' ou 'PP' na string
-                            [Op.or]: valuesArray.map(val => ({
-                                values: { [Op.like]: `%${val}%` }
-                            }))
-                        }
+                    const valuesArray = optionValues.split(',');
+                    orConditions.push({
+                        id: parseInt(optionId),
+                        [Op.or]: valuesArray.map(val => ({
+                            values: { [Op.like]: `%${val}%` }
+                        }))
                     });
                 }
+                includeOption.where = { [Op.or]: orConditions };
             }
+
+            // Injeta as 3 amarrações dentro das Regras de busca do Sequelize
+            includeRules = [includeCategory, includeOption, includeImage];
 
             // Filtro de campos (?fields=name,price)
             let attributesToReturn = undefined;
@@ -142,8 +139,33 @@ const ProductController = {
                 distinct: true // Pega produtos distintos se tiver em categorias diferentes
             });
 
+            const produtosFormatados = resultado.rows.map(produto => {
+                let obj = produto.toJSON();
+                delete obj.createdAt;
+                delete obj.updatedAt;
+                delete obj.use_in_menu;
+                if (obj.categories) {
+                    obj.category_ids = obj.categories.map(categoria => categoria.id);
+                    delete obj.categories;
+                }
+                if (obj.images) {
+                    obj.images = obj.images.map(img => ({
+                        id: img.id,
+                        content: img.path
+                    }));
+                }
+                if (obj.options) {
+                    obj.options = obj.options.map(opt => {
+                        delete opt.createdAt;
+                        delete opt.updatedAt;
+                        return opt;
+                    });
+                }
+                return obj;
+            });
+
             return res.status(200).json({
-                data: resultado.rows,
+                data: produtosFormatados,
                 total: resultado.count,
                 limit: limit,
                 page: page
@@ -158,12 +180,42 @@ const ProductController = {
     async searchById(req, res) {
         try {
             const { id } = req.params;
-            const produto = await Product.findByPk(id);
+            const produto = await Product.findByPk(id, {
+                include: [
+                    { model: Category, as: 'categories', through: { attributes: [] } },
+                    { model: ProductImage, as: 'images' },
+                    { model: ProductOption, as: 'options' }
+                ]
+            });
+
             if (!produto) {
                 return res.status(404).json({ message: "Produto não encontrado" });
             }
 
-            return res.status(200).json(produto);
+            let obj = produto.toJSON();
+            delete obj.createdAt;
+            delete obj.updatedAt;
+            delete obj.use_in_menu;
+
+            if (obj.categories) {
+                obj.category_ids = obj.categories.map(categoria => categoria.id);
+                delete obj.categories;
+            }
+            if (obj.images) {
+                obj.images = obj.images.map(img => ({
+                    id: img.id,
+                    content: img.path
+                }));
+            }
+            if (obj.options) {
+                obj.options = obj.options.map(opt => {
+                    delete opt.createdAt;
+                    delete opt.updatedAt;
+                    return opt;
+                });
+            }
+
+            return res.status(200).json(obj);
         } catch (error) {
             return res.status(400).json({ message: "Erro na busca", error: error.message });
         }
@@ -178,6 +230,10 @@ const ProductController = {
                 return res.status(404).json({ message: "Produto não encontrado" });
             }
 
+            // Processo de CASCADE
+            await ProductImage.destroy({ where: { product_id: id } });
+            await ProductOption.destroy({ where: { product_id: id } });
+            await ProductCategory.destroy({ where: { product_id: id } });
             await produto.destroy();
             return res.status(204).send();
         } catch (error) {
@@ -226,8 +282,9 @@ const ProductController = {
             if (options && options.length > 0) {
                 for (let opt of options) {
                     // O React sempre manda as Variações em Array ["PP", "M"], mas o SQL pede Texto "PP,M"
-                    if (opt.values && Array.isArray(opt.values)) {
-                        opt.values = opt.values.join(',');
+                    const valSource = opt.values || opt.value;
+                    if (valSource && Array.isArray(valSource)) {
+                        opt.values = valSource.join(',');
                     }
 
                     if (opt.deleted) {

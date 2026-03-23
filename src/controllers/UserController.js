@@ -24,8 +24,10 @@ const UserController = {
                 email,
                 password: passwordHash
             });
-            // Retorna o usuário criado com status 201 (Created)
-            return res.status(201).json(newUser);
+            // Retorna o usuário criado com status 201 (Created), porém deleta o campo de senha
+            const userJson = newUser.toJSON();
+            delete userJson.password; // Deleta o campo password, msm que criptografado nao deve ser retornado
+            return res.status(201).json(userJson);
         } catch (error) {
             // Se houver erro, retorna status 400 (Bad Request)
             return res.status(400).json({ message: "Algo deu errado!", error: error.message });
@@ -40,7 +42,7 @@ const UserController = {
 
             // Busca o usuário no banco de dados com Sequelize (SELECT * FROM users WHERE id = ?)
             const user = await User.findByPk(id, {
-                attributes: { exclude: ['password'] }
+                attributes: ['id', 'firstname', 'surname', 'email']
             });
 
             // Se o sequelize não retornar nada

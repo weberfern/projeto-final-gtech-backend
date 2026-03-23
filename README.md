@@ -4,6 +4,22 @@ Este repositório contém a infraestrutura de Back-end em **Node.js** desenvolvi
 
 Esta API RESTful foi desenhada sob a arquitetura **MVC** para fornecer o motor completo de catálogo de produtos, filtragem avançada de vitrine e sistema de segurança (Login JWT) para o nosso Front-end (React).
 
+## 👥 Autores
+
+**Weber Fernandes**  
+GitHub: [weberfern](https://github.com/weberfern)  
+Email: [weber12@gmail.com](mailto:weber12@gmail.com)
+
+**Sandra Vasconcelos**  
+GitHub: [SandraVasconcelos-74](https://github.com/SandraVasconcelos-74)  
+Email: [sandrajulala@gmail.com](mailto:sandrajulala@gmail.com)
+
+**Assis Sousa**  
+GitHub: [assissousa](https://github.com/assissousa)  
+Email: [assispsousa@gmail.com](mailto:assispsousa@gmail.com)
+
+---
+
 ## 🛠️ Tecnologias Utilizadas
 - **Node.js & Express:** Roteamento rápido e construção do servidor central.
 - **Sequelize ORM & MySQL:** Modelagem Orientada a Objetos para o banco de dados relacional.
@@ -16,20 +32,24 @@ O projeto foi particionado focando a alta responsabilidade única de cada camada
 ```text
 ├── src/
 │   ├── config/       # Chaves e configurações de acesso ao Banco de Dados (database.js)
-│   ├── controllers/  # Controladores da aplicação (Regras de negócio, cálculos, Models)
+│   ├── controllers/  # Controladores da aplicação (Regras de negócio e Models)
 │   ├── middleware/   # Componentes de segurança (Validação de JWT Header)
 │   ├── migrations/   # Histórico arquitetural (Geração das Tabelas via CLI)
 │   ├── models/       # Definição das Entidades (User, Category, Product)
 │   ├── routes/       # Portas de Entrada da API mapeadas por verbos HTTP
-│   └── server.js     # Inicializador do Servidor Express
-├── .env              # (Oculto) Senhas Locais
-└── .sequelizerc      # Mapa de direcionamento auxiliar
+│   ├── services/     # Serviços auxiliares e integrações
+│   ├── app.js        # Configuração do Express e Middlewares
+│   └── server.js     # Inicializador de escuta do Servidor
+├── tests/            # Suíte de testes automatizados e integração
+├── .env              # Variáveis de Ambiente
+└── .sequelizerc      # Configurações do Sequelize CLI
 ```
 
 ## 🔐 End-Points e Rotas Protegidas
 O motor do Drip Store divide as requisições em duas esferas claras de segurança:
 
 ### 🟢 Rotas Públicas (Vitrine Aberta)
+- `GET /v1/status` (Verifica a saúde do servidor)
 - `GET /v1/product/search` (Busca Inteligente por limite, offset de página e Match de Lupa)
 - `GET /v1/product/:id` (Apresentação detalhada da galeria do produto e SKU/Opções)
 - `GET /v1/category/search` (Apresenta o Menu Dinâmico)
@@ -50,22 +70,21 @@ O motor do Drip Store divide as requisições em duas esferas claras de seguran�
 git clone https://github.com/weberfern/projeto-final-gtech-backend.git
 ```
 
-2. Instale as dependências limpas do NodeJS:
+2. Instale as dependências:
 ```bash
-cd projeto-final-gtech-backend
 npm install
 ```
 
 3. Base de Dados:
-- Crie um arquivo em branco chamado `.env` na raiz do seu projeto espelhando as variáveis de conexão com o seu **MySQL local**:
+- Crie um arquivo chamado `.env` na raiz do projeto conforme o padrão:
 ```env
 DB_HOST=127.0.0.1
 DB_USER=root
-DB_PASSWORD=sua_senha (A mesma configurada no seu MYSQL local)
+DB_PASSWORD=sua_senha
 DB_NAME=drip_store_db
 JWT_SECRET=SuaChaveSuperSecreta
 ```
-- Rode as *Migrations* no diretório local para espelhar as Tabelas em branco no seu DBeaver/Workbench:
+- Rode as *Migrations* para gerar as tabelas:
 ```bash
 npx sequelize-cli db:migrate
 ```
@@ -74,32 +93,34 @@ npx sequelize-cli db:migrate
 ```bash
 npm start
 ```
-O servidor começará a escutar requisições do seu Front-end na porta `http://localhost:3000/v1/status`.
+Acesse `http://localhost:3000/v1/status` para validar o funcionamento.
 
 ---
 
-## 📸 Demonstração de Testes do Servidor (Postman / ThunderClient)
+## 📸 Demonstração de Testes do Servidor (Postman)
 
-Abaixo as respostas mapeando a eficiência e o design dos Models, retornando com fluidez as requisições:
+Abaixo as respostas mapeando a eficiência e o design dos Models:
 
 ### Visualização de Usuário gerado com a senha criptografada
 <p align="center">
-  <img src="images/image (1).png" width="100%" />
+  <img src="images/image (1).png" width="80%" />
 </p>
 
 ### Visualização de Token gerado com JWT
 <p align="center">
-  <img src="images/image (4).png" width="100%" />
+  <img src="images/image (4).png" width="80%" />
 </p>
 
-### Proteção de Middleware JWT - 401 Unauthorized
+### Proteção de Middleware JWT - 400 Bad Request
 <p align="center">
-  <img src="images/image (2).png" width="100%" />
+  <img src="images/image (2).png" width="80%" />
 </p>
 
 ### Retorno de erro informando categoria não autorizada (Token validado)
 <p align="center">
-  <img src="images/image (3).png" width="100%" />
+  <img src="images/image (3).png" width="80%" />
 </p>
 
-<p align="center">Desenvolvido por Weber Fernandes durante a Formação Digital College.</p>
+---
+
+<p align="center">Desenvolvido durante o Bootcamp Geração Tech 3.0 (Digital College).</p>

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ProductOptions', {
+    await queryInterface.createTable('product_options', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,22 +10,29 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       product_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'Products', key: 'id' }
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       shape: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('square', 'circle'),
+        defaultValue: "square"
       },
       radius: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       type: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('text', 'color'),
+        defaultValue: "text"
       },
       values: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       created_at: {
         allowNull: false,

@@ -6,7 +6,7 @@ function authMiddleware(req, res, next) {
 
         // Se não for enviado nenhum token
         if (!authorization) {
-            return res.status(401).json({ message: "Acesso bloqueado: não foi fornecido um token." });
+            return res.status(400).json({ message: "Acesso bloqueado: não foi fornecido um token." });
         }
 
         // Cabeçalho no formato Bearer, pega só a numeração
@@ -18,7 +18,7 @@ function authMiddleware(req, res, next) {
         // Se o token for válido, libera o acesso
         next();
     } catch (error) {
-        return res.status(401).json({ message: "Acesso bloqueado: Token inválido ou inexistente." });
+        return res.status(400).json({ message: "Acesso bloqueado: Token inválido ou inexistente." });
     }
 }
 

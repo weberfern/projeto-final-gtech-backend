@@ -9,7 +9,7 @@ const CategoryController = {
             limit = parseInt(limit);
             page = parseInt(page);
 
-            let attributesToReturn = undefined;
+            let attributesToReturn = ['id', 'name', 'slug', 'use_in_menu'];
             if (fields) {
                 attributesToReturn = fields.split(',');
                 if (!attributesToReturn.includes('id')) {
@@ -29,17 +29,16 @@ const CategoryController = {
                 searchRules.use_in_menu = true;
             }
 
-            // Sequelize acha as categorias e já contabiliza no total de registros
             const resultado = await Category.findAndCountAll({
                 where: searchRules,
                 attributes: attributesToReturn,
-                limit: limit !== -1 ? undefined : limit,
+                limit: limit !== -1 ? limit : undefined,
                 offset: salto
             });
 
             return res.status(200).json({
-                data: resultado.rows, // Array com as categorias
-                total: resultado.count, // Quantidade existente no banco
+                data: resultado.rows,
+                total: resultado.count,
                 limit: limit,
                 page: page
             });
@@ -52,7 +51,9 @@ const CategoryController = {
     async searchById(req, res) {
         try {
             const { id } = req.params;
-            const category = await Category.findByPk(id);
+            const category = await Category.findByPk(id, {
+                attributes: ['id', 'name', 'slug', 'use_in_menu']
+            });
 
             if (!category) {
                 return res.status(404).json({ message: "Categoria não encontrada" });
@@ -68,8 +69,15 @@ const CategoryController = {
     async create(req, res) {
         try {
             const { name, slug, use_in_menu } = req.body;
+
+            if (!name || !slug) {
+                return res.status(400).json({ message: "Todos os campos são obrigatórios." });
+            }
             const newCategory = await Category.create({ name, slug, use_in_menu });
-            return res.status(201).json(newCategory);
+            const categoryJson = newCategory.toJSON();
+            delete categoryJson.createdAt;
+            delete categoryJson.updatedAt;
+            return res.status(201).json(categoryJson);
         } catch (error) {
             return res.status(400).json({ message: "Erro ao criar categoria", error: error.message });
         }
