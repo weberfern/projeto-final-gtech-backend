@@ -5,9 +5,17 @@ const CategoryController = {
     async search(req, res) {
         try {
             // Pega as query strings da url, se não mandar nada assume valores padrão
-            let { limit = 12, page = 1, use_in_menu } = req.query;
-            limit = parseInt(int);
+            let { limit = 12, page = 1, use_in_menu, fields } = req.query;
+            limit = parseInt(limit);
             page = parseInt(page);
+
+            let attributesToReturn = undefined;
+            if (fields) {
+                attributesToReturn = fields.split(',');
+                if (!attributesToReturn.includes('id')) {
+                    attributesToReturn.push('id'); // ID é chave primária, sempre tem que vir junto!
+                }
+            }
 
             // Lógica offset, se está na page 3 buscando 10 itens, os 20 itens das pages 1 e 2 devem ficar pra trás
             let salto = 0;
@@ -24,6 +32,7 @@ const CategoryController = {
             // Sequelize acha as categorias e já contabiliza no total de registros
             const resultado = await Category.findAndCountAll({
                 where: searchRules,
+                attributes: attributesToReturn,
                 limit: limit !== -1 ? undefined : limit,
                 offset: salto
             });

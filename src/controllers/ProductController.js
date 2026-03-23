@@ -103,6 +103,26 @@ const ProductController = {
                 })
             }
 
+            // Filtro de Opções do Produto (?option[45]=GG,PP)
+            if (req.query.option) {
+                // O loop for...of extrai o ID "45" e a string "GG,PP" 
+                for (const [optionId, optionValues] of Object.entries(req.query.option)) {
+
+                    const valuesArray = optionValues.split(','); // Transforma "GG,PP" em ['GG', 'PP']
+                    includeRules.push({
+                        model: ProductOption,
+                        as: 'options',
+                        where: {
+                            id: parseInt(optionId),
+                            // Cria regras LIKE na tabela Vizinhas buscando a palavra 'GG' ou 'PP' na string
+                            [Op.or]: valuesArray.map(val => ({
+                                values: { [Op.like]: `%${val}%` }
+                            }))
+                        }
+                    });
+                }
+            }
+
             // Filtro de campos (?fields=name,price)
             let attributesToReturn = undefined;
             if (fields) {
@@ -169,18 +189,61 @@ const ProductController = {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const dadosNovos = req.body;
+            // O Javascript "Puxa e Separa" (desestrutura) só os Arrays de Imagens e Variações. Tudo que sobrar (nome, preço, stock) vai para a variável `dadosRestantes`!
+            const { images, options, category_ids, ...dadosRestantes } = req.body;
+
             const produto = await Product.findByPk(id);
 
             if (!produto) {
                 return res.status(404).json({ message: "Produto não encontrado" });
             }
 
-            await produto.update(dadosNovos);
+            // Atualiza a tabela-mãe
+            await produto.update(dadosRestantes);
+
+            // Se o Front enviou categorias novas, a função setCategories inejta e apaga a velha
+            if (category_ids) {
+                await produto.setCategories(category_ids);
+            }
+
+            // Lógica Destrutiva de Fotos
+            if (images && images.length > 0) {
+                for (let img of images) {
+                    if (img.deleted) {
+                        // O FrontEnd manda deletar a foto do produto
+                        await ProductImage.destroy({ where: { id: img.id, product_id: id } });
+                    } else if (img.id) {
+                        // Delete a foto antiga e insere a nova
+                        await ProductImage.update({ path: img.content }, { where: { id: img.id, product_id: id } });
+                    } else if (img.content) {
+                        // Insere a nova foto
+                        await ProductImage.create({ path: img.content, product_id: id, enabled: img.enabled || 0 });
+                    }
+                }
+            }
+
+            // Lógica Destrutiva de Variações de Cor/Tamanho
+            if (options && options.length > 0) {
+                for (let opt of options) {
+                    // O React sempre manda as Variações em Array ["PP", "M"], mas o SQL pede Texto "PP,M"
+                    if (opt.values && Array.isArray(opt.values)) {
+                        opt.values = opt.values.join(',');
+                    }
+
+                    if (opt.deleted) {
+                        await ProductOption.destroy({ where: { id: opt.id, product_id: id } });
+                    } else if (opt.id) {
+                        await ProductOption.update(opt, { where: { id: opt.id, product_id: id } });
+                    } else {
+                        await ProductOption.create({ ...opt, product_id: id });
+                    }
+                }
+            }
+
             return res.status(204).send();
 
         } catch (error) {
-            return res.status(400).json({ message: "Erro ao atualizar produto", error: error.message });
+            return res.status(400).json({ message: "Erro crítico ao atualizar", error: error.message });
         }
     }
 }
