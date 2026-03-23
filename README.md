@@ -82,9 +82,14 @@ O servidor começará a escutar requisições do seu Front-end na porta `http://
 
 Abaixo as respostas mapeando a eficiência e o design dos Models, retornando com fluidez as requisições:
 
-### Visualização de Token gerado com JWT
+### Visualização de Usuário gerado com a senha criptografada
 <p align="center">
   <img src="images/image (1).png" width="100%" />
+</p>
+
+### Visualização de Token gerado com JWT
+<p align="center">
+  <img src="images/image (4).png" width="100%" />
 </p>
 
 ### Proteção de Middleware JWT - 401 Unauthorized
