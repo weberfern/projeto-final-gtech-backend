@@ -72,7 +72,12 @@ O motor da API divide as requisições em duas esferas claras de segurança:
 git clone https://github.com/weberfern/projeto-final-gtech-backend.git
 ```
 
-2. Instale as dependências:
+2. Acesse o diretório do projeto:
+```bash
+cd drip-store-backend
+```
+
+3. Instale as dependências:
 ```bash
 npm install
 ```
