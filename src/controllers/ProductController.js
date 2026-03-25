@@ -11,6 +11,12 @@ const ProductController = {
                 category_ids, images, options
             } = req.body;
 
+            // Verifica se já existe um produto com o mesmo nome
+            const productExists = await Product.findOne({ where: { name } });
+            if (productExists) {
+                return res.status(400).json({ message: "Um produto com este nome já existe." });
+            }
+
             // Salvar na tabela product
             const novoProduto = await Product.create({
                 enabled, name, slug, use_in_menu, stock, description, price, price_with_discount

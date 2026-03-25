@@ -1,0 +1,68 @@
+
+> drip-store-backend@1.0.0 test
+> cross-env NODE_ENV=test jest --runInBand --forceExit tests/product.test.js
+
+  console.log
+    [dotenv@17.3.1] injecting env (7) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+
+      at _log (node_modules/dotenv/lib/main.js:139:11)
+
+(node:10732) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+FAIL tests/product.test.js
+  Product API
+    √ deve criar um novo produto (8 ms)
+    √ deve retornar um produto específico (9 ms)
+    √ deve retornar um erro se o nome já existir (3 ms)
+    × deve atualizar um produto (7 ms)
+    √ deve retornar um produto atualizado (5 ms)
+    × deve deletar um produto (7 ms)
+    √ deve retornar um erro se o produto não existir (4 ms)
+    √ deve retornar um erro ao deletar produto se o token não for informado (3 ms)
+
+  ● Product API › deve atualizar um produto
+
+    expect(received).toHaveProperty(path, value)
+
+    Expected path: "id"
+    Received path: []
+
+    Expected value: 1
+    Received value: {}
+
+    [0m [90m 102 |[39m             [33m.[39msend(productDataUpdate)[33m;[39m
+     [90m 103 |[39m         expect(res[33m.[39mstatusCode)[33m.[39mtoBe([35m204[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 104 |[39m         expect(res[33m.[39mbody)[33m.[39mtoHaveProperty([32m'id'[39m[33m,[39m productID)[33m;[39m [90m// Verifica se o produto foi atualizado[39m
+     [90m     |[39m                          [31m[1m^[22m[39m
+     [90m 105 |[39m     })[33m;[39m
+     [90m 106 |[39m
+     [90m 107 |[39m     [90m// Teste 5: para verificar se o produto foi atualizado[39m[0m
+
+      at Object.toHaveProperty (tests/product.test.js:104:26)
+
+  ● Product API › deve deletar um produto
+
+    expect(received).toHaveProperty(path, value)
+
+    Expected path: "id"
+    Received path: []
+
+    Expected value: 1
+    Received value: {}
+
+    [0m [90m 122 |[39m             [33m.[39m[36mset[39m([32m'Authorization'[39m[33m,[39m [32m`Bearer ${token}`[39m)[33m;[39m
+     [90m 123 |[39m         expect(res[33m.[39mstatusCode)[33m.[39mtoBe([35m204[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 124 |[39m         expect(res[33m.[39mbody)[33m.[39mtoHaveProperty([32m'id'[39m[33m,[39m productID)[33m;[39m [90m// Verifica se o produto foi deletado[39m
+     [90m     |[39m                          [31m[1m^[22m[39m
+     [90m 125 |[39m     })[33m;[39m
+     [90m 126 |[39m
+     [90m 127 |[39m     [90m// Teste 7: para validar se o produto foi deletado[39m[0m
+
+      at Object.toHaveProperty (tests/product.test.js:124:26)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 6 passed, 8 total
+Snapshots:   0 total
+Time:        1.265 s, estimated 2 s
+Ran all test suites matching tests/product.test.js.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?

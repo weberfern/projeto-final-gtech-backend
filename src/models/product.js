@@ -33,8 +33,16 @@ module.exports = (sequelize, DataTypes) => {
   }
   Product.init({
     enabled: DataTypes.BOOLEAN,
-    name: DataTypes.STRING,
-    slug: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     use_in_menu: DataTypes.BOOLEAN,
     stock: DataTypes.INTEGER,
     description: DataTypes.TEXT,

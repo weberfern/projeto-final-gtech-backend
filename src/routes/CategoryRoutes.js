@@ -74,7 +74,7 @@ router.get('/category/:id', CategoryController.searchById);
  *     responses:
  *       201:
  *         description: 'Categoria criada com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  */
 router.post('/category', authMiddleware, CategoryController.create);
@@ -114,7 +114,7 @@ router.post('/category', authMiddleware, CategoryController.create);
  *     responses:
  *       204:
  *         description: 'Categoria atualizada com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  *       404:
  *         description: 'Categoria não encontrada.'
@@ -140,7 +140,7 @@ router.put('/category/:id', authMiddleware, CategoryController.update);
  *     responses:
  *       204:
  *         description: 'Categoria deletada com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  *       404:
  *         description: 'Categoria não encontrada.'

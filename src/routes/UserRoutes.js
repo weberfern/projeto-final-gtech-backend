@@ -27,19 +27,19 @@ const authMiddleware = require('../middleware/authMiddleware');
  *             properties:
  *               firstname:
  *                 type: string
- *                 example: "Weber"
+ *                 example: "Exemplo"
  *               surname:
  *                 type: string
- *                 example: "Fernandes"
+ *                 example: "Sobrenome"
  *               email:
  *                 type: string
- *                 example: "weber12@gmail.com"
+ *                 example: "exemplo@email.com"
  *               password:
  *                 type: string
- *                 example: "weber150"
+ *                 example: "senha123"
  *               confirmPassword:
  *                 type: string
- *                 example: "weber150"
+ *                 example: "senha123"
  *     responses:
  *       201:
  *         description: 'Usuário criado com sucesso.'
@@ -95,7 +95,7 @@ router.get('/user/:id', UserController.searchById);
  *     responses:
  *       200:
  *         description: 'Login bem-sucedido.'
- *       401:
+ *       400:
  *         description: 'Credenciais inválidas.'
  */
 router.post('/user/token', AuthController.login);
@@ -136,7 +136,7 @@ router.post('/user/token', AuthController.login);
  *     responses:
  *       204:
  *         description: 'Usuário atualizado com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  *       404:
  *         description: 'Usuário não encontrado.'
@@ -163,7 +163,7 @@ router.put('/user/:id', authMiddleware, UserController.update);
  *     responses:
  *       204:
  *         description: 'Usuário deletado com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  *       404:
  *         description: 'Usuário não encontrado.'

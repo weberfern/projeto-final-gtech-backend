@@ -9,6 +9,12 @@ const UserController = {
             // Recebe os dados do corpo da requisição
             const { firstname, surname, email, password, confirmPassword } = req.body;
 
+            // Verifica se já existe um usuário com esse e-mail
+            const userExists = await User.findOne({ where: { email } });
+            if (userExists) {
+                return res.status(400).json({ message: "Este e-mail já está em uso." });
+            }
+
             // Checando se a senha bate (confirmPassword)
             if (password !== confirmPassword) {
                 return res.status(400).json({ message: "As senhas não coincidem." });

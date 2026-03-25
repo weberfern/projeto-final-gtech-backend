@@ -83,7 +83,7 @@ router.get('/product/:id', ProductController.searchById);
  *     responses:
  *       201:
  *         description: 'Produto criado com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  */
 router.post('/product', authMiddleware, ProductController.create);
@@ -120,7 +120,7 @@ router.post('/product', authMiddleware, ProductController.create);
  *     responses:
  *       204:
  *         description: 'Produto atualizado com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  *       404:
  *         description: 'Produto não encontrado.'
@@ -146,7 +146,7 @@ router.put('/product/:id', authMiddleware, ProductController.update);
  *     responses:
  *       204:
  *         description: 'Produto deletado com sucesso.'
- *       401:
+ *       400:
  *         description: 'Não autorizado.'
  *       404:
  *         description: 'Produto não encontrado.'
