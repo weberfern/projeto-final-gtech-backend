@@ -20,7 +20,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Category.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     slug: DataTypes.STRING,
     use_in_menu: DataTypes.BOOLEAN
   }, {
