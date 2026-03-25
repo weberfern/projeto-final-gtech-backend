@@ -83,6 +83,7 @@ DB_USER=root
 DB_PASSWORD=sua_senha
 DB_NAME=drip_store_db
 JWT_SECRET=SuaChaveSuperSecreta
+JWT_EXPIRES_IN=1d
 ```
 - Rode as *Migrations* para gerar as tabelas:
 ```bash
@@ -94,6 +95,25 @@ npx sequelize-cli db:migrate
 npm start
 ```
 Acesse `http://localhost:3000/v1/status` para validar o funcionamento.
+
+---
+
+## 📖 Documentação da API (Swagger)
+
+A API conta com documentação interativa via **Swagger**, permitindo testar todos os endpoints diretamente pelo navegador.
+
+Para acessar, inicie o servidor e navegue até:
+`http://localhost:3000/api-docs`
+
+---
+
+## 📸 Demonstração da API (Swagger UI)
+
+Abaixo está uma demonstração da interface do Swagger com as rotas documentadas:
+
+<p align="center">
+  <img src="images/swagger.png" width="90%" alt="Swagger Documentation Demo" />
+</p>
 
 ---
 

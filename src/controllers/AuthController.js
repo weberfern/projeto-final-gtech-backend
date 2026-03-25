@@ -25,7 +25,7 @@ const AuthController = {
             const token = jwt.sign(
                 { id: user.id, email: user.email },
                 process.env.JWT_SECRET,
-                { expiresIn: '3h' }
+                { expiresIn: process.env.JWT_EXPIRES_IN }
             );
 
             // Retorna o token em formato json para o localStorage

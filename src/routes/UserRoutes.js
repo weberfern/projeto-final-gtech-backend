@@ -4,19 +4,170 @@ const UserController = require('../controllers/UserController');
 const AuthController = require('../controllers/AuthController');
 const authMiddleware = require('../middleware/authMiddleware');
 
-// Rotas de usuário
+/**
+ * @swagger
+ * /v1/user:
+ *   post:
+ *     tags:
+ *       - Usuários
+ *     summary: Cria um novo usuário.
+ *     description: Endpoint para registrar um novo usuário no sistema.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstname
+ *               - surname
+ *               - email
+ *               - password
+ *               - confirmPassword
+ *             properties:
+ *               firstname:
+ *                 type: string
+ *                 example: "Weber"
+ *               surname:
+ *                 type: string
+ *                 example: "Fernandes"
+ *               email:
+ *                 type: string
+ *                 example: "weber12@gmail.com"
+ *               password:
+ *                 type: string
+ *                 example: "weber150"
+ *               confirmPassword:
+ *                 type: string
+ *                 example: "weber150"
+ *     responses:
+ *       201:
+ *         description: 'Usuário criado com sucesso.'
+ *       400:
+ *         description: 'Dados inválidos ou erro de validação.'
+ */
 router.post('/user', UserController.create);
 
-// Rota para buscar um usuário pelo ID
+/**
+ * @swagger
+ * /v1/user/{id}:
+ *   get:
+ *     tags:
+ *       - Usuários
+ *     summary: Busca um usuário pelo seu ID.
+ *     description: Retorna os dados públicos de um usuário específico.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: O ID do usuário a ser buscado.
+ *     responses:
+ *       200:
+ *         description: 'Dados do usuário retornados com sucesso.'
+ *       404:
+ *         description: 'Usuário não encontrado.'
+ */
 router.get('/user/:id', UserController.searchById);
 
-// Rota de login com token
+/**
+ * @swagger
+ * /v1/user/token:
+ *   post:
+ *     tags:
+ *       - Usuários
+ *     summary: Autentica um usuário e retorna um token JWT.
+ *     description: Realiza o login do usuário com email e senha.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "usuario@email.com"
+ *               password:
+ *                 type: string
+ *                 example: "senha123"
+ *     responses:
+ *       200:
+ *         description: 'Login bem-sucedido.'
+ *       401:
+ *         description: 'Credenciais inválidas.'
+ */
 router.post('/user/token', AuthController.login);
 
-// Rota para atualizar usuário com segurança do middleware
+/**
+ * @swagger
+ * /v1/user/{id}:
+ *   put:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Usuários
+ *     summary: Atualiza os dados de um usuário.
+ *     description: 'Atualiza informações do usuário. Requer autenticação.'
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: O ID do usuário a ser atualizado.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstname:
+ *                 type: string
+ *                 example: "Weber"
+ *               surname:
+ *                 type: string
+ *                 example: "Fernandes Souza"
+ *               email:
+ *                 type: string
+ *                 example: "weber_novo@exemplo.com"
+ *     responses:
+ *       204:
+ *         description: 'Usuário atualizado com sucesso.'
+ *       401:
+ *         description: 'Não autorizado.'
+ *       404:
+ *         description: 'Usuário não encontrado.'
+ */
 router.put('/user/:id', authMiddleware, UserController.update);
 
-// Rota para deletar usuário com segurança do middleware
+/**
+ * @swagger
+ * /v1/user/{id}:
+ *   delete:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Usuários
+ *     summary: Deleta um usuário.
+ *     description: 'Remove um usuário do sistema. Requer autenticação.'
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: O ID do usuário a ser deletado.
+ *     responses:
+ *       204:
+ *         description: 'Usuário deletado com sucesso.'
+ *       401:
+ *         description: 'Não autorizado.'
+ *       404:
+ *         description: 'Usuário não encontrado.'
+ */
 router.delete('/user/:id', authMiddleware, UserController.delete);
 
 
