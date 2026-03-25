@@ -78,7 +78,7 @@ npm install
 ```
 
 3. Base de Dados (MySQL):
-- O projeto exige o uso de **MySQL** (conforme requisitos). Recomendamos o uso do **XAMPP** para gerenciar o servidor local e o **DBeaver** ou **MySQL Workbench** para visualização e administração dos dados.
+- O projeto exige o uso de **MySQL** (conforme requisitos). Recomendamos o uso do **XAMPP** para gerenciar o servidor local e o **DBeaver** para visualização e administração dos dados.
 - Certifique-se de que o MySQL esteja rodando em sua máquina.
 - Crie um arquivo chamado `.env` na raiz do projeto conforme o padrão:
 ```env
