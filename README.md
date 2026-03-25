@@ -48,7 +48,7 @@ O projeto foi particionado focando a alta responsabilidade única de cada camada
 ```
 
 ## 🔐 End-Points e Rotas Protegidas
-O motor do Drip Store divide as requisições em duas esferas claras de segurança:
+O motor da API divide as requisições em duas esferas claras de segurança:
 
 ### 🟢 Rotas Públicas (Vitrine Aberta)
 - `GET /v1/status` (Verifica a saúde do servidor)
@@ -81,11 +81,11 @@ npm install
 - O projeto exige o uso de **MySQL** (conforme requisitos).
 - **Ferramentas Recomendadas:**
   - **XAMPP:** [Baixar aqui](https://www.apachefriends.org/pt_br/index.html) (Gerenciador do Servidor Local).
-  - **DBeaver (Opcional):** [Baixar aqui](https://dbeaver.io/download/) (Visualizador do Banco de Dados).
+  - **DBeaver:** [Baixar aqui](https://dbeaver.io/download/) (Visualizador do Banco de Dados).
 
 - **Configuração Rápida:**
   1. No painel do **XAMPP**, clique em **Start** na linha do **MySQL**.
-  2. Utilize o **DBeaver** (ou similar) para criar um banco de dados chamado `drip_store_db` no seu servidor local (localhost:3306).
+  2. Utilize o **DBeaver** para criar um banco de dados chamado `drip_store_db` no seu servidor local (localhost:3306).
 
 <p align="center">
   <img src="images/xampp.png" width="60%" alt="XAMPP MySQL Start" />
