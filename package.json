@@ -23,7 +23,6 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
     "cross-env": "^10.1.0",
     "jest": "^30.3.0",
     "sequelize-cli": "^6.6.5",
