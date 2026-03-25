@@ -69,7 +69,7 @@ router.post('/user', UserController.create);
  *       404:
  *         description: 'Usuário não encontrado.'
  */
-router.get('/user/:id', UserController.searchById);
+router.get('/user/:id', authMiddleware, UserController.searchById);
 
 /**
  * @swagger

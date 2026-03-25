@@ -1,7 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize } = require('../src/models');
-const Product = require('../src/models/Product');
+const { sequelize, Product } = require('../src/models');
 
 beforeAll(async () => {
     // Sincroniza o banco de teste, recriando as tabelas (Verificar se no .env o DB_TEST_NAME está configurado corretamente)
