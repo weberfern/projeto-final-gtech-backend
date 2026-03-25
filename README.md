@@ -74,7 +74,7 @@ git clone https://github.com/weberfern/projeto-final-gtech-backend.git
 
 2. Acesse o diretório do projeto:
 ```bash
-cd drip-store-backend
+cd projeto-final-gtech-backend
 ```
 
 3. Instale as dependências:
