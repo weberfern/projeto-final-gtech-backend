@@ -26,6 +26,8 @@ Email: [assispsousa@gmail.com](mailto:assispsousa@gmail.com)
 - **JSON Web Token (JWT) & Bcrypt:** Autenticação e bloqueio de rotas privadas via criptografia.
 - **Dotenv:** Proteção e ocultamento de variáveis de ambiente sensíveis à Nuvem.
 - **Nodemon:** Hot-reloading imersivo durante o desenvolvimento.
+- **Swagger (swagger-jsdoc & swagger-ui-express):** Documentação interativa e testes de API.
+- **Jest & Supertest:** Suíte de testes automatizados para validação de endpoints.
 
 ## 📂 Arquitetura de Pastas (Padrão MVC)
 O projeto foi particionado focando a alta responsabilidade única de cada camada:
@@ -75,7 +77,9 @@ git clone https://github.com/weberfern/projeto-final-gtech-backend.git
 npm install
 ```
 
-3. Base de Dados:
+3. Base de Dados (MySQL):
+- O projeto exige o uso de **MySQL** (conforme requisitos). Recomendamos o uso do **XAMPP** para gerenciar o servidor local e o **DBeaver** ou **MySQL Workbench** para visualização e administração dos dados.
+- Certifique-se de que o MySQL esteja rodando em sua máquina.
 - Crie um arquivo chamado `.env` na raiz do projeto conforme o padrão:
 ```env
 DB_HOST=127.0.0.1
