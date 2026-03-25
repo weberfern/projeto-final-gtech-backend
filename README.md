@@ -26,7 +26,7 @@ Email: [assispsousa@gmail.com](mailto:assispsousa@gmail.com)
 - **JSON Web Token (JWT) & Bcrypt:** Autenticação e bloqueio de rotas privadas via criptografia.
 - **Dotenv:** Proteção e ocultamento de variáveis de ambiente sensíveis à Nuvem.
 - **Nodemon:** Hot-reloading imersivo durante o desenvolvimento.
-- **Swagger (swagger-jsdoc & swagger-ui-express):** Documentação interativa e testes de API.
+- **Swagger:** Documentação interativa e testes de API.
 - **Jest & Supertest:** Suíte de testes automatizados para validação de endpoints.
 
 ## 📂 Arquitetura de Pastas (Padrão MVC)
