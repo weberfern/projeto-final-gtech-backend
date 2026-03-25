@@ -85,7 +85,8 @@ npm install
 
 - **Configuração Rápida:**
   1. No painel do **XAMPP**, clique em **Start** na linha do **MySQL**.
-  2. Utilize o **DBeaver** para criar um banco de dados chamado `drip_store_db` no seu servidor local (localhost:3306). Caso queira também utilizar um banco de dados para os testes automatizado crie outro chamado `drip_store_test`.
+  2. Utilize o **DBeaver** para criar um banco de dados chamado `drip_store_db` no seu servidor local (localhost:3306). 
+  3. Caso queira também utilizar um banco de dados para os testes automatizado crie outro chamado `drip_store_test`.
 
 <p align="center">
   <img src="images/xampp.png" width="60%" alt="XAMPP MySQL Start" />
