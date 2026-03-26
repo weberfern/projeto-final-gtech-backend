@@ -87,11 +87,12 @@ JWT_EXPIRES_IN=1d
 npx sequelize-cli db:migrate
 ```
 
-4. **Inicie o Servidor**:
+5. **Inicie o Servidor**:
 ```bash
 npm start
 ```
-Acesse `http://localhost:3000/v1/status` para validar a conexão.
+> [!NOTE] 
+> Acesse `http://localhost:3000/v1/status` para validar a conexão.
 
 ---
 
