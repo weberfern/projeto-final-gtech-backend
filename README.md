@@ -54,7 +54,7 @@ O projeto utiliza o padrão Service Layer para manter os controllers limpos e fo
 
 ## 🚀 Como Rodar o Projeto
 
-1. ** Clone o repositório**:
+1. **Clone o repositório**:
 ```bash
 git clone https://github.com/weberfern/drip-store-backend.git
 ```
@@ -75,6 +75,9 @@ DB_PORT=6543
 JWT_SECRET=SuaChaveSecreta
 JWT_EXPIRES_IN=1d
 ```
+
+> [!NOTE]
+> Para rodar o projeto deverá ser criado o banco de dados no Supabase e configurado as variáveis de ambiente no arquivo `.env`.
 
 4. **Rode as Migrations**:
 ```bash
@@ -112,30 +115,6 @@ Para rodar todos os 24 testes:
 npm test
 ```
 *Certifique-se apenas de que as credenciais do banco de dados no `.env` estão corretas e a conexão com o Supabase está ativa.*
-
----
-
-## 📸 Demonstração de Respostas (Postman)
-
-### Visualização de Usuário (Senha Criptografada)
-<p align="center">
-  <img src="images/image (1).png" width="80%" />
-</p>
-
-### Token JWT Gerado
-<p align="center">
-  <img src="images/image (4).png" width="80%" />
-</p>
-
-### Proteção JWT (400 Bad Request)
-<p align="center">
-  <img src="images/image (2).png" width="80%" />
-</p>
-
-### Erro de Autorização (Token Validado)
-<p align="center">
-  <img src="images/image (3).png" width="80%" />
-</p>
 
 ---
 
