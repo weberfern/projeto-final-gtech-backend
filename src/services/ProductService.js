@@ -10,10 +10,10 @@ class ProductService {
         } = query;
         limit = parseInt(limit);
         page = parseInt(page);
-        
+
         const offset = limit !== -1 ? (page - 1) * limit : 0;
         let searchRules = {};
-        
+
         if (match) {
             searchRules[Op.or] = [
                 { name: { [Op.like]: `%${match}%` } },
@@ -107,21 +107,21 @@ class ProductService {
 
             // Relacionar Categorias
             if (category_ids?.length > 0) {
-                await Promise.all(category_ids.map(category_id => 
+                await Promise.all(category_ids.map(category_id =>
                     ProductCategory.create({ product_id: novoProduto.id, category_id }, { transaction: t })
                 ));
             }
 
             // Salvar Imagens
             if (images?.length > 0) {
-                await Promise.all(images.map(image => 
+                await Promise.all(images.map(image =>
                     ProductImage.create({ product_id: novoProduto.id, path: image.content }, { transaction: t })
                 ));
             }
 
             // Salvar Opções
             if (options?.length > 0) {
-                await Promise.all(options.map(option => 
+                await Promise.all(options.map(option =>
                     ProductOption.create({
                         product_id: novoProduto.id,
                         title: option.title,
@@ -134,7 +134,10 @@ class ProductService {
             }
 
             await t.commit();
-            return novoProduto;
+            const productJson = novoProduto.toJSON();
+            delete productJson.createdAt;
+            delete productJson.updatedAt;
+            return productJson;
         } catch (error) {
             await t.rollback();
             throw error;
