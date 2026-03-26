@@ -54,13 +54,18 @@ O projeto utiliza o padrão Service Layer para manter os controllers limpos e fo
 
 ## 🚀 Como Rodar o Projeto
 
-1. **Instale as dependências**:
+1. ** Clone o repositório**:
+```bash
+git clone https://github.com/weberfern/drip-store-backend.git
+```
+
+2. **Instale as dependências**:
 ```bash
 npm install
 ```
 
-2. **Configuração do Banco de Dados (Supabase)**:
-O projeto foi migrado de MySQL para **PostgreSQL**. Crie um arquivo `.env` na raiz conforme o modelo:
+3. **Configuração do Banco de Dados (Supabase)**:
+O projeto utiliza **PostgreSQL** (Supabase). Crie um arquivo `.env` na raiz conforme o modelo:
 ```env
 DB_HOST=seu-projeto.supabase.co
 DB_USER=postgres
@@ -71,7 +76,7 @@ JWT_SECRET=SuaChaveSecreta
 JWT_EXPIRES_IN=1d
 ```
 
-3. **Rode as Migrations**:
+4. **Rode as Migrations**:
 ```bash
 npx sequelize-cli db:migrate
 ```
