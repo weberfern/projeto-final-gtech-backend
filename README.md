@@ -78,7 +78,7 @@ npx sequelize-cli db:migrate
 
 4. **Inicie o Servidor**:
 ```bash
-npm run dev
+npm start
 ```
 Acesse `http://localhost:3000/v1/status` para validar a conexão.
 
@@ -97,11 +97,16 @@ A documentação completa das rotas, payloads e status codes pode ser acessada e
 ---
 
 ## 🧪 Testes Automatizados
-O projeto conta com uma suíte de testes robusta. Para rodar todos os 24 testes:
+O projeto conta com uma suíte de testes robusta que utiliza **Supertest** para validar os endpoints.
+
+> [!NOTE]
+> Você pode rodar os testes a qualquer momento, **sem precisar que o servidor principal (`npm start`) esteja ligado**. Os testes criam um servidor efêmero automaticamente para a validação.
+
+Para rodar todos os 24 testes:
 ```bash
 npm test
 ```
-*Certifique-se de que a conexão com o banco de teste no Supabase está ativa.*
+*Certifique-se apenas de que as credenciais do banco de dados no `.env` estão corretas e a conexão com o Supabase está ativa.*
 
 ---
 
