@@ -59,6 +59,9 @@ O projeto utiliza o padrão Service Layer para manter os controllers limpos e fo
 git clone https://github.com/weberfern/drip-store-backend.git
 ```
 
+> [!NOTE]
+> Após clonar é necessário acessar a pasta com o comando: `cd drip-store-backend`
+
 2. **Instale as dependências**:
 ```bash
 npm install
