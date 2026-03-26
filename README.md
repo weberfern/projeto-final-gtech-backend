@@ -40,13 +40,13 @@ O projeto utiliza o padrão Service Layer para manter os controllers limpos e fo
 │   ├── controllers/  # Controladores (Lidando com req/res e status codes)
 │   ├── middleware/   # Segurança e Validação (JWT Header)
 │   ├── migrations/   # Histórico de banco de dados (Sequelize migrations)
-│   ├── models/       # Entidades do sistema (PascalCase)
+│   ├── models/       # Entidades do sistema
 │   ├── routes/       # Definição das rotas e documentação Swagger
 │   ├── services/     # Camada de Lógica de Negócio e Transações SQL
 │   ├── app.js        # Setup do Express
 │   └── server.js     # Inicialização do servidor
 ├── tests/            # Testes automatizados (Product, User, Category)
-├── .env              # Configurações sensíveis
+├── .env              # Configurações de variáveis de ambiente
 └── package.json      # Dependências e scripts
 ```
 
