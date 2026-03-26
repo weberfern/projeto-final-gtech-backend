@@ -30,10 +30,7 @@ beforeAll(async () => {
     categoryId = catRes.body.id;
 });
 
-afterAll(async () => {
-    // Fecha a conexão após os testes
-    await sequelize.close();
-});
+
 
 // ========================================
 //              Dados do produto

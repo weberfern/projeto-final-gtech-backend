@@ -11,7 +11,7 @@ module.exports = {
       },
       enabled: {
         type: Sequelize.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
       },
       name: {
         type: Sequelize.STRING,
@@ -23,7 +23,7 @@ module.exports = {
       },
       use_in_menu: {
         type: Sequelize.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
       },
       stock: {
         type: Sequelize.INTEGER,

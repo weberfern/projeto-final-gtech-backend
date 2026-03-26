@@ -31,10 +31,7 @@ beforeAll(async () => {
     token = loginRes.body.token;
 });
 
-afterAll(async () => {
-    // Fecha a conexão após os testes
-    await sequelize.close();
-});
+
 
 describe('User API', () => {
     // ========================================

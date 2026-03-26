@@ -19,7 +19,7 @@ module.exports = {
       },
       use_in_menu: {
         type: Sequelize.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
       },
       created_at: {
         allowNull: false,

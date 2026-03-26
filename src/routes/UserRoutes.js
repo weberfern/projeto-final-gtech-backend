@@ -52,6 +52,8 @@ router.post('/user', UserController.create);
  * @swagger
  * /v1/user/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Usuários
  *     summary: Busca um usuário pelo seu ID.

@@ -20,9 +20,7 @@ beforeAll(async () => {
     token = res.body.token;
 });
 
-afterAll(async () => {
-    await sequelize.close();
-});
+
 
 describe('Category API', () => {
     // Teste 1: para criar uma categoria

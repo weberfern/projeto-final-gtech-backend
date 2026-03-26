@@ -16,7 +16,7 @@ module.exports = {
       },
       enabled: {
         type: Sequelize.BOOLEAN,
-        defaultValue: 0
+        defaultValue: false
       },
       path: {
         type: Sequelize.STRING,

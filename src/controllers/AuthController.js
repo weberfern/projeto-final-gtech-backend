@@ -1,37 +1,14 @@
-const { User } = require('../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const AuthService = require('../services/AuthService');
 
 const AuthController = {
-    // Função para o usuario fazer login e ganhar o token
+    // Login de usuário
     async login(req, res) {
         try {
             const { email, password } = req.body;
-
-            // Verificando se há usuario com email no banco de dados
-            const user = await User.findOne({ where: { email } });
-
-            if (!user) {
-                return res.status(400).json({ message: "Credenciais inválidas" });
-            }
-
-            // Se email tiver no banco de dados verifica a senha criptograda com bcrypt (analisa o hash)
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return res.status(400).json({ message: "Credenciais inválidas" });
-            }
-
-            // Se a senha estiver correta gera o token
-            const token = jwt.sign(
-                { id: user.id, email: user.email },
-                process.env.JWT_SECRET,
-                { expiresIn: process.env.JWT_EXPIRES_IN }
-            );
-
-            // Retorna o token em formato json para o localStorage
+            const token = await AuthService.login(email, password);
             return res.status(200).json({ token });
         } catch (error) {
-            return res.status(400).json({ error: error.message });
+            return res.status(400).json({ message: error.message || "Credenciais inválidas" });
         }
     }
 }
