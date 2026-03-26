@@ -1,4 +1,4 @@
-# 🛒 Projeto Final Geração Tech 3.0 - API Backend
+# ⚙️ Projeto Final Geração Tech 3.0 - API Backend
 
 Este repositório contém a infraestrutura de Back-end em **Node.js** desenvolvida como parte oficial do **Bootcamp Geração Tech 3.0** (Digital College). 
 
